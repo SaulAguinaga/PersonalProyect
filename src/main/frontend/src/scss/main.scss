@@ -1,0 +1,9 @@
+@use "/src/scss/resetScss.scss";
+@use "@/scss/colors" as c;
+@use "@/scss/fonts";
+
+body{
+    font-family:  "openSans" ;
+
+    background-color: map-get(c.$colors,"black");
+}
