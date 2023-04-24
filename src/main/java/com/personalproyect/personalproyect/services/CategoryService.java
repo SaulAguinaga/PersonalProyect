@@ -38,7 +38,7 @@ public class CategoryService implements BaseService<Category>{
 
     @Transactional
     public void saveCategory(Long id, Category category) {
-        Category categoryToAdd = new Category(id, category.getName());
+        Category categoryToAdd = new Category(id, category.getName(), null);
         categoryRepository.save(categoryToAdd);
     }
 

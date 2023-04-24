@@ -1,3 +1,7 @@
+<script setup>
+
+</script>
+
 <template>
   <div class="titleDiv">
     <div class="neon-text-blue">HAY GANAS DE</div>
@@ -10,6 +14,7 @@
   width: 100%;
   display: flex;
   flex-direction: row;
+  align-items: baseline;
   justify-content: right;
   margin-top: -10%;
 }

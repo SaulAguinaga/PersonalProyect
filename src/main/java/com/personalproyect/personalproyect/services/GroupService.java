@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.personalproyect.personalproyect.exception.GroupNotFoundException;
 import com.personalproyect.personalproyect.models.Group;
+import com.personalproyect.personalproyect.repositories.AcademyRepository;
 import com.personalproyect.personalproyect.repositories.GroupRepository;
 
 import jakarta.transaction.Transactional;
@@ -17,6 +18,7 @@ import jakarta.transaction.Transactional;
 public class GroupService implements BaseService<Group>{
     @Autowired
     private GroupRepository groupRepository;
+
   
     @Override
     public List<Group> findAll() {

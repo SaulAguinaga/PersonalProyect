@@ -11,6 +11,7 @@ public class Category {
     private Long id;
     
     private String name;
+    private String age;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
     private List<Group> group;
@@ -18,11 +19,20 @@ public class Category {
     public Category() {
     }
 
-    public Category(Long id, String name) {
+    public Category(Long id, String name, String age) {
         this.id = id;
         this.name = name;
+        this.age = age;
     }
     
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
 
     public String getName() {
         return name;

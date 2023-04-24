@@ -1,45 +1,69 @@
+<script setup>
+import { defineProps, onBeforeMount, ref } from 'vue';
+
+const props = defineProps({
+	academy: Object,
+})
+</script>
+
+
 <template>
-    <div>
-      <button class="card">ACADEMIAS</button>
+    <div class="card">
+      <div class="imgAndText" >
+        <img class="img" :src="'http://localhost:8080/' + academy.image" alt="">
+      </div>
+      <h1 class="academyName">{{ academy.name }}</h1>
+      <h2 class="academyLocation">{{ academy.location }}</h2>
 
     </div>
 </template>
-<style>
-.card {
+
+<style scoped lang="scss">
+.card{
+  color: white;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 5vw;
-  height: 10vh;
-  flex-direction: column;
-  background-color: transparent;
-  border-radius: 5px;
-  border: none;
-  outline: none;
-  color: white;
-  box-shadow: 0 0 10px #ED54C0, 0 0 10px #ED54C0, 0 0 10px #ED54C0, 0 0 10px #ED54C0, 0 0 10px #ED54C0, 0 0 10px #ED54C0, 0 0 10px #ED54C0;
-  outline-offset: 5px;
+  .img{
+    width: 100%;
+  }
+  .imgAndText {
+    width: 70%;
+    height: 20vh;
+    display: flex;
+    margin: 20px;
+    background-color: white;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    color: white;
+    box-shadow: 0 0 10px #ED54C0, 0 0 10px #ED54C0, 0 0 10px #ED54C0, 0 0 10px #ED54C0, 0 0 10px #ED54C0, 0 0 10px #ED54C0, 0 0 10px #ED54C0;
+    outline-offset: 5px;
+  }
+  .imgAndText:hover {
+    width: 70%;
+    height: 20vh;
+    display: flex;
+    margin: 20px;
+    background-color: white;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    color: white;
+    box-shadow: 0 0 2px #00F6FF, 0 0 5px #00F6FF, 0 0 7px #00F6FF, 0 0 10px #00F6FF, 0 0 17px #00F6FF, 0 0 20px #00F6FF, 0 0 25px #00F6FF, 0 0 37px #00F6FF;
+    outline-offset: 5px;
+    cursor: pointer;
+  }
+  .academyName{
+    font-size: x-large;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  .academyLocation{
+    font-weight: lighter;
+    text-decoration: none;
+
+  }
 }
-
-/* .vertical-nav button {
-  display: block;
-  width: 100%;
-  margin-bottom: 10%;
-  margin-top: 10%;
-  background-color: transparent;
-  border: none;
-  border-radius: 5px;
-  font-size: 100%;
-  padding-bottom: 2%;
-  font-weight: bold;
-  color: #fff;
-  cursor: pointer;
-}
-
-.vertical-nav button:hover {
-    font-size: 100%;
-    text-shadow: 0 0 5px #00F6FF, 0 0 10px #00F6FF, 0 0 15px #00F6FF, 0 0 20px #00F6FF, 0 0 35px #00F6FF, 0 0 40px #00F6FF, 0 0 50px #00F6FF, 0 0 75px #00F6FF;
-
-} */
-
 </style>

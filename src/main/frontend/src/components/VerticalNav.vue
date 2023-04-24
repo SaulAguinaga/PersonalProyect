@@ -1,4 +1,5 @@
 <script>
+
 export default {
   data() {
     return {
@@ -14,18 +15,21 @@ export default {
   }
 }
 </script>
-
 <template>
-    <div class="vertical-nav">
-      <button v-for="button in buttons" :key="button.id">{{ button.label }}</button>
-    </div>
-  </template>
+  <div class="vertical-nav">
+    <router-link v-for="button in buttons" :key="button.id" :to="`/${button.label.toLowerCase()}`">
+      <button>{{ button.label }}</button>
+    </router-link>
+  </div>
+</template>
 
-  <style>
+
+<style>
 .vertical-nav {
+  z-index: 1;
   display: flex;
   margin-left: 10%;
-  width: 70%;
+  width: 100%;
   flex-direction: column;
   background-color: transparent;
   border-radius: 5px;
@@ -43,7 +47,7 @@ export default {
   background-color: transparent;
   border: none;
   border-radius: 5px;
-  font-size: 100%;
+  font-size: 1.4rem;
   padding-bottom: 2%;
   font-weight: bold;
   color: #fff;
@@ -51,9 +55,7 @@ export default {
 }
 
 .vertical-nav button:hover {
-    font-size: 100%;
+  font-size: 1.4rem;
     text-shadow: 0 0 5px #00F6FF, 0 0 10px #00F6FF, 0 0 15px #00F6FF, 0 0 20px #00F6FF, 0 0 35px #00F6FF, 0 0 40px #00F6FF, 0 0 50px #00F6FF, 0 0 75px #00F6FF;
-
 }
-
 </style>

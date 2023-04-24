@@ -35,6 +35,7 @@ public class GroupController {
         return groupService.findById(id);
     }
 
+
     @PostMapping(path = "")
     public void createGroup(@RequestBody Group group) {
         groupService.saveGroup(null, group);
