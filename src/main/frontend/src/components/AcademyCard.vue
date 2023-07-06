@@ -8,29 +8,29 @@ const props = defineProps({
 
 
 <template>
-    <div class="card">
-      <div class="imgAndText" >
-        <img class="img" :src="'http://localhost:8080/' + academy.image" alt="">
+  <div class="academyCard">
+    <div class="imgAndText">
+      <div class="imgContainer">
+        <img class="img" :src="'https://dancecrew-images.s3.amazonaws.com/' + academy.phoneNumber + '.png'" alt="">
       </div>
-      <h1 class="academyName">{{ academy.name }}</h1>
-      <h2 class="academyLocation">{{ academy.location }}</h2>
-
     </div>
+    <h1 class="academyName">{{ academy.academyName }}</h1>
+    <h2 class="academyLocation">{{ academy.location }}</h2>
+    <h2 class="academyLocation">{{ academy.phoneNumber }}</h2>
+  </div>
 </template>
 
 <style scoped lang="scss">
-.card{
+.academyCard {
   color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  .img{
-    width: 100%;
-  }
+  text-align: center;
+  
   .imgAndText {
-    width: 70%;
-    height: 20vh;
+    width: 100%;
     display: flex;
     margin: 20px;
     background-color: white;
@@ -41,9 +41,24 @@ const props = defineProps({
     box-shadow: 0 0 10px #ED54C0, 0 0 10px #ED54C0, 0 0 10px #ED54C0, 0 0 10px #ED54C0, 0 0 10px #ED54C0, 0 0 10px #ED54C0, 0 0 10px #ED54C0;
     outline-offset: 5px;
   }
+
+  .imgContainer {
+    width: 100%;
+    padding-top: 100%; /* Mantén el aspecto cuadrado */
+    position: relative;
+    overflow: hidden;
+  }
+
+  .imgContainer img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ajusta la imagen para que cubra el contenedor sin distorsión */
+  }
   .imgAndText:hover {
-    width: 70%;
-    height: 20vh;
+    width: 100%;
     display: flex;
     margin: 20px;
     background-color: white;

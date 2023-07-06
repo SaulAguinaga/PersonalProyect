@@ -2,67 +2,63 @@
 import { defineProps, onBeforeMount, ref } from 'vue';
 
 const props = defineProps({
-	group: Object,
+  group: Object,
 })
 </script>
 
-
 <template>
-    <div class="card">
-      <div class="imgAndText" >
-          <h1 class="groupName">{{ group.name }}</h1>
-          <h2 class="categoryName">{{ group.category.name }}</h2>
-      </div>
-
+  <div class="groupCard">
+    <div class="groupImgContainer">
+      <img class="img" :src="'https://dancecrew-category-icons.s3.amazonaws.com/' + group.category + '.png'" alt="">
     </div>
+    <div class="groupText">
+      <h1 class="groupName">{{ group.groupName }}</h1>
+      <h2 class="groupCategory">{{ group.category }}</h2>
+    </div>
+  </div>
 </template>
 
 <style scoped lang="scss">
-.card{
-    margin-top: 3%;
-  color: white;
+.groupCard {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  margin-left: 30px;
+  color: #fff;
+
+}
+
+.groupImgContainer {
+  width: 10vw;
+  background-color: #fff;
+  box-shadow: 0 0 10px #ED54C0, 0 0 10px #ED54C0, 0 0 10px #ED54C0, 0 0 10px #ED54C0, 0 0 10px #ED54C0, 0 0 10px #ED54C0, 0 0 10px #ED54C0;
+  border-radius: 5px;
+  outline-offset: 5px;
+}
+
+.groupImgContainer img {
+  width: 100%;
+}
+
+.groupText {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  
-  .imgAndText {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    margin: 20px;
-    border-radius: 5px;
-    padding-left: 2%;
-    padding-right: 2%;
-    border: none;
-    outline: none;
-    color: white;
-    box-shadow: 0px 8px 10px -5px #ED54C0;
-    outline-offset: 5px;
-  }
-  .imgAndText:hover {
-    width: 100%;
-    justify-content: space-between;
-    display: flex;
-    margin: 20px;
-    border-radius: 5px;
-    border: none;
-    outline: none;
-    color: white;
-    box-shadow: 0px 8px 10px -5px #00F6FF;
-    outline-offset: 5px;
-    cursor: pointer;
-  }
-  .groupName{
-    font-size: 2rem;
-    font-weight: bold;
-    text-decoration: none;
-  }
-  .categoryName{
-    font-size: 2rem;
-    font-weight: lighter;
-    text-decoration: none;
+  text-align: center;
+  padding: 10px;
+}
 
-  }
+.groupName {
+  font-size: x-large; 
+  font-weight: bold;
+  margin: 0;
+  max-width: 100%;
+  overflow: hidden;
+  word-wrap: break-word; /* Añade esta propiedad */
+}
+
+.groupCategory {
+  font-weight: lighter;
+  margin: 0;
 }
 </style>

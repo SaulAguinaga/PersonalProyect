@@ -1,110 +1,82 @@
 <script setup>
-import VerticalNav from '../components/VerticalNav.vue';
-import { ref, onBeforeMount } from "vue";
-import CategoryService from '../services/CategoryService';
+import HorizontalNav from '../components/HorizontalNav.vue';
 import CategoryCard from '../components/CategoryCard.vue';
+import { ref, onBeforeMount } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import axios from 'axios';
 
+const categories = ['Baby', 'Infantil', 'Duo-Infantil', 'Junior', 'Duo-Junior', 'Young', 'Duo-Young', 'Premium', 'Mega-Crew'];
 
-// const groupService = new GroupService();
-const categoryService = new CategoryService();
-	let categories = ref([]);
-  let academy = ref()
- 	onBeforeMount(async()=>{
-	await categoryService.fetchAllCategories()
-    categories.value = categoryService.getCategory()
-	console.log(categories.value);
-	});
+const selectedCategory = ref(null);
+const groups = ref([]);
+const router = useRouter();
+const route = useRoute();
 
+async function showGroupList(category) {
+  selectedCategory.value = category;
+  router.push({ path: '/categorias', query: { category } }); // Actualiza la URL con la categoría seleccionada
+  try {
+    const response = await axios.get('https://t3guk01jof.execute-api.us-east-1.amazonaws.com/groups');
+    groups.value = response.data.filter(group => group.category === category);
+    console.log(groups.value);
+  } catch (error) {
+    console.error(error);
+  }
+}
 
+onBeforeMount(async () => {
+  const queryCategory = route.query.category;
+  if (queryCategory) {
+    showGroupList(queryCategory);
+  }
+});
 </script>
+
 <template>
-  <div class="header">
-    <div class="logoDanceStyle">
-      <div class="logoAndVerticalNav">
-        <img class="imageLogo" src="../assets/images/danceStyleLogo.png" alt="Logo" />
-        <VerticalNav/>
-      </div>
-      <div class="pointsUp">
-        <img class="imagePointsUp" src="../assets/images/puntos.png" alt="Points Up" />
+  <HorizontalNav/>
+  <div class="categoryHeader">
+    <div class="categoryList">
+      <div v-for="category in categories" :key="category" class="categoryLink">
+        <CategoryCard :category="category" @click="showGroupList(category)" />
       </div>
     </div>
-      <div class="section">
-        <h1 class="neon-text-blue">Categorias</h1>
-      </div>
+    <div v-if="selectedCategory" class="groupList">
+      <h2>{{ selectedCategory }}</h2>
+      <ul>
+        <li v-for="group in groups" :key="group.id">{{ group.groupName }}</li>
+      </ul>
+    </div>
   </div>
-<div class="container">
-      <div class="blank">
-      </div>
-      <div class="cardsList">
-            <CategoryCard v-for="category in categories" :category="category" />
-</div>
-</div>
 </template>
+
 <style scoped lang="scss">
-.header {
-  padding: 1%;
-  width: 100%;
-  height: 20vh;
-  display: flex;
-  flex-direction: row;
-  justify-content: left;
-  // z-index: 0;
-  .logoDanceStyle {
-    width: 30%;
-    display: flex;
-      .logoAndVerticalNav{
-        width: 40%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        .imageLogo {
-          width: 100%;
-          object-fit: contain;
-        }
-      }
-      .pointsUp {
-        display: flex;
-        margin-left: 15%;
-          .imagePointsUp {
-            height: 30vw;
-          }
-        }
-    }
-    .section{
-      display: flex;
-      justify-content: center;
-      // align-items: center;
-      .neon-text-blue {
-      margin-right: 2%;
-      font-family: sans-serif;
-      font-size: 7em;
-      color: #fff;
-      text-shadow: 0 0 5px #00F6FF, 0 0 10px #00F6FF, 0 0 15px #00F6FF, 0 0 20px #00F6FF, 0 0 35px #00F6FF, 0 0 40px #00F6FF, 0 0 50px #00F6FF, 0 0 75px #00F6FF;
-    }
-    }
-    .academy{
-      display: flex;
-      margin-left: 40%;
-      margin-top: 2%;
-    }
+h2 {
+  font-size: x-large;
+  color: white;
 }
-.container{
-  width: 100%;
+li{
+  color: white;
+}
+
+.categoryHeader {
   display: flex;
   flex-direction: row;
-  .blank{
-    width: 30%;
-  }
-  .cardsList {
-    width: 100%;
-    margin-right: 15%;
-    display: grid;
-    grid-template-columns: repeat(1, 0.7fr);
-    grid-template-rows: repeat(5, 1fr);
-    justify-content: end;
-    .divCard {
-      align-content: flex-end;
-    }
-  }
+  align-items: center;
+}
+
+.categoryList {
+  width: 70%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.categoryLink {
+  cursor: pointer;
+}
+
+.groupList {
+
+  width: 30%;
 }
 </style>

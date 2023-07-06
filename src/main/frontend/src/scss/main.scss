@@ -2,8 +2,52 @@
 @use "@/scss/colors" as c;
 @use "@/scss/fonts";
 
-body{
-    font-family:  "openSans" ;
+body {
+  font-family: "openSans";
+  background-color: map-get(c.$colors, "black");
+  overflow-x: hidden;
+}
 
-    background-color: map-get(c.$colors,"black");
+// .header {
+//   display: flex;
+//   justify-content: space-between;
+//   width: 100%;
+//   position: fixed;
+//   top: 0;
+//   left: 0;
+//   background-color: map-get(c.$colors, "black");
+//   z-index: 9999;
+//   padding: 10px;
+// }
+
+// .cardsList {
+//   display: flex;
+//   flex-wrap: wrap;
+// }
+
+// .cardLink {
+//   padding: 0 10px;
+//   margin: 5px;
+//   width: 15%;
+// }
+
+// .form {
+//   display: flex;
+//   width: 25%;
+//   margin-right: 10px;
+// }
+
+/* Estilos para el scroll lateral */
+::-webkit-scrollbar {
+  width: 8px;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: map-get(c.$colors, "gray");
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: map-get(c.$colors, "darkGray"); /* Color del scroll al pasar el cursor */
 }

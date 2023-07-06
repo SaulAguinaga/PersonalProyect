@@ -1,118 +1,77 @@
 <script setup>
-import VerticalNav from '../components/VerticalNav.vue';
-import Title from '../components/Title.vue';
+import { reactive, ref, onBeforeMount } from "vue";
+import axios from "axios";
+import { useRoute } from 'vue-router';
+
+import HorizontalNav from '../components/HorizontalNav.vue';
+import GroupForm from '../components/GroupForm.vue';
 import GroupCard from '../components/GroupCard.vue';
-import GroupService from '../services/GroupService';
-import { ref, onBeforeMount } from "vue";
-import AcademyCard from '../components/AcademyCard.vue';
-import AcademyService from '../services/AcademyService';
 
+const groups = ref([]);
+const route = useRoute();
+const phoneNumber = route.params.academyId;
+const academy = ref([]);
 
-const groupService = new GroupService();
-const academyService = new AcademyService();
-	let groups = ref([]);
-  let academy = ref()
- 	onBeforeMount(async()=>{
-	await groupService.fetchAllGroups()
-  await academyService.fetchOneAcademy(1)
-	groups.value = groupService.getGroup()
-  academy.value = academyService.getAcademy()
-	console.log(groups.value);
-	});
-
-
-</script>
-<template>
-  <div class="header">
-    <div class="logoDanceStyle">
-      <div class="logoAndVerticalNav">
-        <img class="imageLogo" src="../assets/images/danceStyleLogo.png" alt="Logo" />
-        <VerticalNav/>
-      </div>
-      <div class="pointsUp">
-        <img class="imagePointsUp" src="../assets/images/puntos.png" alt="Points Up" />
-      </div>
-    </div>
-      <div class="section">
-        <h1 class="neon-text-blue">Grupos</h1>
-      </div>
-      <div class="academy">
-      <AcademyCard :academy="academy"/>
-    </div>
-  </div>
-<div class="container">
-      <div class="blank">
-      </div>
-      <div class="cardsList">
-            <GroupCard v-for="group in groups" :group="group" />
-</div>
-</div>
-</template>
-<style scoped lang="scss">
-.header {
-  padding: 1%;
-  width: 100%;
-  height: 20vh;
-  display: flex;
-  flex-direction: row;
-  justify-content: left;
-  // z-index: 0;
-  .logoDanceStyle {
-    width: 30%;
-    display: flex;
-      .logoAndVerticalNav{
-        width: 40%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        .imageLogo {
-          width: 100%;
-          object-fit: contain;
-        }
-      }
-      .pointsUp {
-        display: flex;
-        margin-left: 15%;
-          .imagePointsUp {
-            height: 30vw;
-          }
-        }
+onBeforeMount(async () => {
+  try {
+    const responseAcademy = await axios.get('https://apj87rep7g.execute-api.us-east-1.amazonaws.com/academies');
+    if(phoneNumber == responseAcademy.data.phoneNumber){
+    academy.value = responseAcademy.data;
     }
-    .section{
-      display: flex;
-      justify-content: center;
-      // align-items: center;
-      .neon-text-blue {
-      margin-right: 2%;
-      font-family: sans-serif;
-      font-size: 7em;
-      color: #fff;
-      text-shadow: 0 0 5px #00F6FF, 0 0 10px #00F6FF, 0 0 15px #00F6FF, 0 0 20px #00F6FF, 0 0 35px #00F6FF, 0 0 40px #00F6FF, 0 0 50px #00F6FF, 0 0 75px #00F6FF;
+    console.log(academy.value);
+    console.log(phoneNumber);
+    const response = await axios.get('https://t3guk01jof.execute-api.us-east-1.amazonaws.com/groups');
+    if(phoneNumber==null){
+      groups.value = response.data;
     }
+    else{
+      groups.value = response.data.filter(group => group.phoneNumber == phoneNumber);
+      console.log(groups.value);
     }
-    .academy{
-      display: flex;
-      margin-left: 40%;
-      margin-top: 2%;
-    }
-}
-.container{
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  .blank{
-    width: 30%;
+  } catch (error) {
+    console.error(error);
   }
-  .cardsList {
-    width: 100%;
-    margin-right: 15%;
-    display: grid;
-    grid-template-columns: repeat(1, 0.7fr);
-    grid-template-rows: repeat(5, 1fr);
-    justify-content: end;
-    .divCard {
-      align-content: flex-end;
-    }
+});
+</script>
+
+<template>
+  <HorizontalNav/>
+  <div class="cardsList">
+        <router-link v-for="academy in academies" :key="academy.phoneNumber" :to="'/grupos/' + academy.phoneNumber" class="cardLink">
+          <AcademyCard :academy="academy" />
+        </router-link>
+      </div>
+  <div class="groupHeader">
+    <div class="groupList">
+      <router-link v-for="group in groups" :key="group.id" :to="`/groups/${group.id}`" class="groupLink">
+        <GroupCard :group="group" />
+      </router-link>
+    </div>
+      
+    <template v-if="phoneNumber">
+      <div class="groupForm">
+        <GroupForm/>
+        <ImageSubmit/>
+      </div>
+    </template>
+  </div>
+</template>
+
+<style scoped lang="scss">
+.groupHeader {
+  display: flex;
+  width: 100%;
+  .groupList {
+    width: 75%;
+    display: flex;
+    flex-wrap: wrap; /* Añade esta propiedad */
+  .groupLink{
+    width: 15%;
+  }
+  }
+  .groupForm {
+    display: flex;
+    width: 25%;
   }
 }
 </style>

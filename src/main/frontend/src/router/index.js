@@ -21,6 +21,11 @@ const router = createRouter({
       component: GroupsView
     },
     {
+      path: '/videos',
+      name: 'videos',
+      component: () => import('../views/VideosView.vue')
+    },
+    {
       path: '/categorias',
       name: 'categories',
       component: () => import('../views/CategoriesView.vue')
