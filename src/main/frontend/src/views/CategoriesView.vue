@@ -42,7 +42,7 @@ onBeforeMount(async () => {
     </div>
     <div v-if="selectedCategory" class="groupList">
       <h2>{{ selectedCategory }}</h2>
-      <ul>
+      <ul class="ul">
         <li v-for="group in groups" :key="group.id">{{ group.groupName }}</li>
       </ul>
     </div>
@@ -51,11 +51,20 @@ onBeforeMount(async () => {
 
 <style scoped lang="scss">
 h2 {
-  font-size: x-large;
+  font-size: 4em;
   color: white;
+  border-bottom: 2px solid #ED54C0;
+
 }
 li{
   color: white;
+  margin-top: 10px;
+}
+.ul{
+  margin-top: 20px;
+  font-size: 2em;
+  text-shadow: 0 0 5px #00F6FF, 0 0 10px #00F6FF, 0 0 15px #00F6FF, 0 0 20px #00F6FF, 0 0 35px #00F6FF, 0 0 40px #00F6FF, 0 0 50px #00F6FF, 0 0 75px #00F6FF;
+
 }
 
 .categoryHeader {
